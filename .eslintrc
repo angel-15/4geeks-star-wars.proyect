@@ -10,6 +10,7 @@
   "extends": [ "plugin:react/recommended"],
   "rules": {
     "strict":0,
+    "react/no-unescaped-entities":0,
     "no-unused-vars": 0,
     "no-console": 1,
     "no-mixed-spaces-and-tabs": 0,
@@ -24,8 +25,8 @@
         "objects": "never",
         "imports": "never",
         "exports": "never",
-        "functions": "ignore",
+        "functions": "ignore"
     }],
-    "react/prop-types": [2]
+    "react/prop-types": "off"
   }
 }

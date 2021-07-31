@@ -1,42 +1,50 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
-			demo: [
-				{
-					title: "FIRST",
-					background: "white",
-					initial: "white"
-				},
-				{
-					title: "SECOND",
-					background: "white",
-					initial: "white"
-				}
-			]
+			characters: [],
+			planets: [],
+			vehicles: [],
+			favorites: []
 		},
 		actions: {
-			// Use getActions to call a function within a fuction
-			exampleFunction: () => {
-				getActions().changeColor(0, "green");
+			getCharacters: async () => {
+				let response = await fetch("https://www.swapi.tech/api/people/");
+				let data = await response.json();
+				setStore({ characters: data });
+				// eslint-disable-next-line no-console
+				console.log(data);
 			},
-			loadSomeData: () => {
-				/**
-					fetch().then().then(data => setStore({ "foo": data.bar }))
-				*/
+			getPlanets: async () => {
+				let response = await fetch("https://www.swapi.tech/api/planets/");
+				let data = await response.json();
+				setStore({ planets: data });
+				// eslint-disable-next-line no-console
+				console.log(data.results);
 			},
-			changeColor: (index, color) => {
-				//get the store
-				const store = getStore();
-
-				//we have to loop the entire demo array to look for the respective index
-				//and change its color
-				const demo = store.demo.map((elm, i) => {
-					if (i === index) elm.background = color;
-					return elm;
+			getVehicles: async () => {
+				let response = await fetch("https://www.swapi.tech/api/vehicles/");
+				let data = await response.json();
+				setStore({ vehicles: data });
+				// eslint-disable-next-line no-console
+				console.log(data.results);
+			},
+			addFavorite: name => {
+				setStore({ favorites: [...getStore().favorites, name] });
+			},
+			deleteFavorite: name => {
+				const newFavorites = getStore().favorites.filter(item => {
+					return item != name;
 				});
-
-				//reset the global store
-				setStore({ demo: demo });
+				setStore({ favorites: newFavorites });
+				// eslint-disable-next-line no-console
+				console.log(newFavorites);
+			},
+			isFavorite: name => {
+				if (getStore().favorites) {
+					return getStore().favorites.includes(name);
+				} else {
+					return false;
+				}
 			}
 		}
 	};

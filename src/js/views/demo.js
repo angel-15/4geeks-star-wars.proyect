@@ -8,6 +8,8 @@ import "../../styles/demo.scss";
 export const Demo = () => {
 	const { store, actions } = useContext(Context);
 
+	// eslint-disable-next-line no-console
+	console.log(store);
 	return (
 		<div className="container">
 			<ul className="list-group">
